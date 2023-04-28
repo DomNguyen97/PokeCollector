@@ -7,12 +7,24 @@ ELEMENTS = (
     ('L', 'Lighting')
 )
 
+
+class Item(models.Model):
+  name = models.CharField(max_length=50)
+  color = models.CharField(max_length=20)
+
+  def __str__(self):
+    return self.name
+
+  def get_absolute_url(self):
+    return reverse('items_detail', kwargs={'pk': self.id})
+
 # Create your models here.
 class Pokemon(models.Model):
   name = models.CharField(max_length=100)
   type = models.CharField(max_length=100)
   abilities = models.CharField(max_length=100)
   description = models.TextField(max_length=250)
+  items = models.ManyToManyField(Item)
 
   def __str__(self):
     return f'{self.name} ({self.id})'
